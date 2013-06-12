@@ -1,0 +1,154 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.talend.se.demo.vista.openmash</groupId>
+    <artifactId>hl7mediator</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <parent>
+        <groupId>com.talend.se.vista.openmash</groupId>
+        <artifactId>openmash-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../openmash-parent/pom.xml</relativePath>
+    </parent>
+
+    <name>hl7mediator</name>
+
+    <properties>
+        <hapi.version>2.1</hapi.version>
+        
+        <!-- need to override mina so that it is compatible with camel -->
+        <mina.version>1.1.7</mina.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.mina</groupId>
+                <artifactId>mina-core</artifactId>
+                <version>${mina.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ca.uhn.hapi</groupId>
+                <artifactId>hapi-osgi-base</artifactId>
+                <version>${hapi.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-camel</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-pool</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.mina</groupId>
+            <artifactId>mina-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-mina</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-hl7</artifactId>
+        </dependency>        
+        <dependency>
+            <groupId>ca.uhn.hapi</groupId>
+            <artifactId>hapi-osgi-base</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi</groupId>
+            <artifactId>hapi-base</artifactId>
+            <version>${hapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi</groupId>
+            <artifactId>hapi-structures-v21</artifactId>
+            <version>${hapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ca.uhn.hapi</groupId>
+            <artifactId>hapi-structures-v23</artifactId>
+            <version>${hapi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test-spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.talend.se.demo</groupId>
+            <artifactId>util-spring</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.talend.se.demo</groupId>
+            <artifactId>util-camel</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- these package imports are not needed if just an
+            activemq client rather than an embedded broker in Karaf
+                org.apache.activemq.broker,
+                org.apache.activemq.xbean,
+                org.apache.activemq.jaas,
+                org.apache.activemq.security,
+                org.apache.activemq.spring,
+            -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Package>
+                            org.springframework.beans.factory.config,
+                            org.apache.activemq,
+                            org.apache.activemq.pool,
+                            org.apache.activemq.camel.component,
+                            org.apache.camel.component.mina,
+                            org.apache.camel.component.jms,
+                            org.apache.camel.component.hl7,
+                            com.talend.se.demo.util.spring,
+                            com.talend.se.demo.util.camel,
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

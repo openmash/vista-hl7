@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"	
+       xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:prop="http://camel.apache.org/schema/placeholder"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util.xsd
+		http://activemq.apache.org/schema/core http://activemq.org/config/1.0/1.0.xsd
+		http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd 
+         ">
+
+
+    <!-- start activemq configuration -->
+    <bean id="jmsConnectionFactory" 
+          class="org.apache.activemq.ActiveMQConnectionFactory">
+        <property name="brokerURL" value="tcp://{{activemq.host}}:{{activemq.port}}" />
+    </bean>
+
+    <bean id="pooledConnectionFactory" 
+          class="org.apache.activemq.pool.PooledConnectionFactory" init-method="start" destroy-method="stop">
+        <property name="maxConnections" value="{{activemq.maxConnections}}" />
+        <property name="connectionFactory" ref="jmsConnectionFactory" />
+    </bean>
+
+    <bean id="jmsConfig" 
+          class="org.apache.camel.component.jms.JmsConfiguration">
+        <property name="connectionFactory" ref="pooledConnectionFactory"/>
+        <property name="concurrentConsumers" value="{{activemq.concurrentConsumers}}"/>
+    </bean>
+
+    <bean id="amq" 
+          class="org.apache.activemq.camel.component.ActiveMQComponent">
+        <property name="configuration" ref="jmsConfig"/>
+    </bean>
+    <!-- end activemq configuration -->
+
+    
+    <!-- mina listener start -->
+
+    <bean id="listenerFactory" class="org.apache.camel.component.mina.MinaComponent">
+        <constructor-arg index="0" ref="hl7mediator"/>
+    </bean>
+
+    <bean id="mirthListenerConfig" class="org.apache.camel.component.mina.MinaConfiguration">
+        <property name="protocol" value="tcp"/>
+        <property name="host" value="localhost"/>
+        <property name="port" value="{{mirth.listener.mllp.port}}"/>
+        <property name="sync" value="true"/>
+        <property name="codec" ref="mirth.listener.hl7codec"/>
+    </bean>
+
+    <bean id="mirthListenerEndpoint"
+          factory-bean="listenerFactory"
+          factory-method="createEndpoint">
+        <constructor-arg index="0" ref="mirthListenerConfig"/>
+    </bean>
+
+    <!-- bean id="vistaListenerConfig" class="org.apache.camel.component.mina.MinaConfiguration">
+        <property name="protocol" value="tcp"/>
+        <property name="host" value="localhost"/>
+        <property name="port" value="{{vista.listener.mllp.port}}"/>
+        <property name="sync" value="true"/>
+        <property name="codec" ref="vista.listener.hl7codec"/>
+    </bean>
+
+    <bean id="vistaListenerEndpoint"
+          factory-bean="listenerFactory"
+          factory-method="createEndpoint">
+        <constructor-arg index="0" ref="vistaListenerConfig"/>
+    </bean -->
+
+    <!-- mina listener end -->
+
+
+    <!-- mina mirth sender start -->
+
+    <bean id="senderFactory" class="org.apache.camel.component.mina.MinaComponent">
+        <constructor-arg index="0" ref="hl7mediator"/>
+    </bean>
+
+    <bean id="senderEndpoint"
+          factory-bean="senderFactory"
+          factory-method="createEndpoint">
+        <constructor-arg index="0" ref="senderConfig"/>
+    </bean>
+
+    <bean id="senderConfig" class="org.apache.camel.component.mina.MinaConfiguration">
+        <property name="protocol" value="tcp"/>
+        <property name="host" value="localhost"/>
+        <property name="port" value="{{mirth.sender.mllp.port}}"/>
+        <property name="sync" value="true"/>
+        <property name="codec" ref="mirth.sender.hl7codec"/>
+    </bean>
+
+    <!-- mina mirth sender end -->
+
+
+    <!-- hl7 codec -->
+    <bean id="mirth.listener.hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
+        <property name="charset" value="iso-8859-1"/>
+    </bean>
+
+    <bean id="mirth.sender.hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
+        <property name="charset" value="iso-8859-1"/>
+    </bean>
+
+    <bean id="vista.listener.hl7codec" class="org.apache.camel.component.hl7.HL7MLLPCodec">
+        <property name="charset" value="iso-8859-1"/>
+    </bean>
+                                                
+    <camelContext id="hl7mediator" xmlns="http://camel.apache.org/schema/spring">
+        
+        <camel:propertyPlaceholder id="properties" location="ref:propertySources"/>
+        <!-- endpoint id="mirth.listener.mllp" uri="mina:tcp://localhost:{{mirth.listener.mllp.port}}?sync=true&amp;codec=#mirth.listener.hl7codec"/ -->
+        <!-- endpoint id="mirth.sender.mllp" uri="mina:tcp://{{mirth.host}}:{{mirth.sender.mllp.port}}?sync=true&amp;codec=#mirth.sender.hl7codec"/ -->
+        <endpoint id="mirth.receiver.jms" uri="amq:{{mirth.receiver.jms.queue}}"/>
+        <!-- endpoint id="vista.listener.mllp" uri="mina:tcp://localhost:{{vista.listener.mllp.port}}?sync=true&amp;codec=#vista.listener.hl7codec"/ -->
+        <endpoint id="vistaListenerEndpoint" uri="listenerFactory:tcp://localhost:{{vista.listener.mllp.port}}?sync=true&amp;codec=#vista.listener.hl7codec"/>
+
+
+        <route id="consumeFromMirthJms">
+            <from ref="mirth.receiver.jms"/>
+            <convertBodyTo type="java.lang.String"/>
+            <to uri="log:mirthReceiverJms"/>
+            <inOut ref="senderEndpoint"/>
+            <to uri="log:mirthResponseJms"/>
+        </route>
+        
+        <route id="consumeFromMirthMllp">
+            <!-- from ref="mirth.listener.mllp"/ -->
+            <from ref="mirthListenerEndpoint"/>
+            <to uri="log:mirthListenerMllp"/>
+            <!-- to ref="mirth.sender.mllp"/ -->
+            <to ref="senderEndpoint"/>
+        </route>
+
+        <route id="consumeFromVistaMllp">
+            <!-- from ref="vista.listener.mllp"/ -->
+            <from ref="vistaListenerEndpoint"/>
+            <to uri="log:vistaListenerMllp"/>
+            <to ref="senderEndpoint"/>
+        </route>
+
+    </camelContext>
+		
+
+</beans>
