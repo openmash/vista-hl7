@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"	
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util
+			http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="systemProperties" class="com.talend.se.vista.openmash.util.spring.PrintSystemProperties" />
+    
+    <!-- load just system properties to allow dynamic specification of properties file via local.config System property -->
+    <bean id="systemPropertiesConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="placeholderPrefix" value="##" />
+        <property name="placeholderSuffix" value="##" />
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="propertySources" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="locations">
+            <list>
+                <value>classpath:container.properties</value>
+                <value>classpath:container.test.properties</value>
+                <value>classpath:app.properties</value>
+                <value>classpath:app.test.properties</value>
+                <value>##local.config##</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="springPlaceholderConfig"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+        <property name="placeholderPrefix" value="{{" />
+        <property name="placeholderSuffix" value="}}" />
+        <property name="properties" ref="propertySources"/>
+    </bean>
+    
+    <bean id="testAppProperty" class="java.lang.String">
+        <constructor-arg value="{{appTestProperty}}"/>
+    </bean>
+    
+    <bean id="testContainerProperty" class="java.lang.String">
+        <constructor-arg value="{{containerTestProperty}}"/>
+    </bean>
+
+    
+    <bean id="printProperties" class="com.talend.se.vista.openmash.util.spring.PrintProperties">
+        <property name="propertyList">
+            <map>
+                <entry key="appTestProperty" value="{{appTestProperty}}"/>
+                <entry key="containerTestProperty" value="{{containerTestProperty}}"/>
+            </map>
+        </property>
+    </bean>
+            
+</beans>
