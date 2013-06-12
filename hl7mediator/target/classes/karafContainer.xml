@@ -34,8 +34,7 @@
     </bean>
 
     <!-- osgi config-admin service properties -->
-    <osgix:cm-properties id="osgi-cm-properties" persistent-id="com.talend.se.demo.vista.openmash.hl7mediator">
-        <!--
+    <osgix:cm-properties id="osgi-cm-properties" persistent-id="com.talend.se.vista.openmash.hl7mediator">
         <prop key="activemq.host">amq0.openmashvista.net</prop>
         <prop key="activemq.port">11516</prop>
         <prop key="activemq.concurrentConsumers">10</prop>
@@ -45,7 +44,7 @@
         <prop key="mirth.sender.mllp.port">11961</prop>
         <prop key="mirth.listener.mllp.port">6662</prop>
         <prop key="vista.listener.mllp.port">6663</prop>
-        -->
+        <prop key="localNetwork">0.0.0.0</prop>
     </osgix:cm-properties>
 
     <bean id="optionalProperty" class="org.springframework.beans.factory.config.PropertiesFactoryBean" abstract="true">
@@ -93,6 +92,7 @@
                 <entry key="container" value="{{container}}"/>
                 <entry key="containerConfig" value="{{containerConfig}}"/>
                 <entry key="etcConfigVar" value="{{etcConfigVar}}"/>
+                <entry key="localNetwork" value="{{localNetwork}}"/>
                 <entry key="activemq.host" value="{{activemq.host}}"/>
                 <entry key="activemq.port" value="{{activemq.port}}"/>
                 <entry key="activemq.concurrentConsumers" value="{{activemq.concurrentConsumers}}"/>

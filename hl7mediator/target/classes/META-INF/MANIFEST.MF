@@ -1,18 +1,17 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1371012392605
+Bnd-LastModified: 1371041081092
 Build-Jdk: 1.7.0_13
 Built-By: EdwardOst
 Bundle-Description: Profiles shared by all Talend SE demos
 Bundle-ManifestVersion: 2
 Bundle-Name: hl7mediator
-Bundle-SymbolicName: com.talend.se.demo.vista.openmash.hl7mediator
+Bundle-SymbolicName: com.talend.se.vista.openmash.hl7mediator
 Bundle-Version: 1.0.0.SNAPSHOT
 Created-By: Apache Maven Bundle Plugin
-Import-Package: com.talend.se.demo.util.camel;version="[1.0,2)",com.tale
- nd.se.demo.util.spring;version="[1.0,2)",org.apache.activemq;version="[
- 5.7,6)",org.apache.activemq.camel.component;version="[5.7,6)",org.apach
- e.activemq.pool;version="[5.7,6)",org.apache.camel.component.hl7;versio
- n="[2.10,3)",org.apache.camel.component.jms;version="[2.10,3)",org.apac
- he.camel.component.mina;version="[2.10,3)",org.springframework.beans.fa
- ctory.config;version="[3.0,4)"
+Import-Package: com.talend.se.demo.util.spring;version="[1.0,2)",org.apa
+ che.activemq;version="[5.7,6)",org.apache.activemq.camel.component;vers
+ ion="[5.7,6)",org.apache.activemq.pool;version="[5.7,6)",org.apache.cam
+ el.component.hl7;version="[2.10,3)",org.apache.camel.component.jms;vers
+ ion="[2.10,3)",org.apache.camel.component.mina;version="[2.10,3)",org.s
+ pringframework.beans.factory.config;version="[3.0,4)"
 Tool: Bnd-1.50.0

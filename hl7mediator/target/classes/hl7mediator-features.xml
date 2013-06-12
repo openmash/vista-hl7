@@ -31,7 +31,6 @@
     <feature version="${camel.version}">camel-hl7</feature>
 
     <bundle dependency='true'>mvn:com.talend.se.demo/util-spring/${project.version}</bundle>
-    <bundle dependency='true'>mvn:com.talend.se.demo/util-camel/${project.version}</bundle>
     <bundle>mvn:${project.groupId}/${project.build.finalName}/${project.version}</bundle>
   </feature>
         

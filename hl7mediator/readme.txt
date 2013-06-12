@@ -28,11 +28,7 @@ commandline and assume maven and jdk are on the path.
 
 Dependencies
 This module depends on the util-spring module.  See the readme for that module
-on how to build and compile it.  The util-spring module must be deployed to
-the nexus repository in order to deploy this feature to the karaf runtime.  The
-util-spring module does not need to be deployed manually itself.  The transitive
-dependency management of the karaf features file will handle it.  But it needs
-to exist in the nexus repository.
+on how to build and compile it.  (It is basically the same, mvn clean install)
 
 Steps
 To run the code in a local Spring container with Camel during development:
@@ -46,7 +42,8 @@ To build this code and create an OSGI bundle:
 To deploy the resulting bundle to a Nexus repository edit the
 distributionManagement element of the pom to match your repository and then
 issue the maven deploy command.  Note that this is not the same as deploying
-the bundle to the actual esb node.
+the bundle to the actual esb node.  This step is not necessary if all of the
+builds are being done on the same machine as the target runtime.
 
 > mvn deploy
 
@@ -81,7 +78,12 @@ generated as part of the build process.  Resolution of transitive dependencies
 on other features and bundles will be managed and installed as necessary by the
 Karaf container.  
 
-karaf> features:addurl mvn:com.talend.se.demo.vista.openmash/hl7mediator/1.0-SNAPSHOT/xml/features
+This hl7mediator module depends on the util-spring module.  The transitive
+dependency management of the karaf features file will handle it.  But the
+util-spring module must have been deployed to the nexus repository in order for
+this feature to be available to the karaf runtime.  
+
+karaf> features:addurl mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT/xml/features
 karaf> features:install hl7mediator
 
 
@@ -97,7 +99,7 @@ karaf> features:install activemq-camel
 karaf> install -s mvn:ca.uhn.hapi/hapi-osgi-base/2.1
 karaf> install -s mvn:org.apache.camel/camel-hl7/2.10.2
 karaf> install -s mvn:com.talend.se.demo/util-spring/1.0-SNAPSHOT
-karaf> install -s mvn:com.talend.se.demo.vista.openmash/hl7mediator/1.0-SNAPSHOT
+karaf> install -s mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT
 
 A scripted version of these commands are available in hl7mediator.install.script
 which is located in the resource folder.

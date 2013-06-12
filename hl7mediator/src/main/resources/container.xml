@@ -23,6 +23,7 @@
         <prop key="mirth.sender.mllp.port">11961</prop>
         <prop key="mirth.listener.mllp.port">6662</prop>
         <prop key="vista.listener.mllp.port">6663</prop>
+        <prop key="localNetwork">0.0.0.0</prop>
     </util:properties> 
 
     <!-- load just system properties to allow dynamic specification of properties file via local.config System property -->
@@ -77,6 +78,7 @@
                 <entry key="container" value="{{container}}"/>
                 <entry key="containerConfig" value="{{containerConfig}}"/>
                 <entry key="etcConfigVar" value="{{etcConfigVar}}"/>
+                <entry key="localNetwork" value="{{localNetwork}}"/>
                 <entry key="activemq.host" value="{{activemq.host}}"/>
                 <entry key="activemq.port" value="{{activemq.port}}"/>
                 <entry key="activemq.concurrentConsumers" value="{{activemq.concurrentConsumers}}"/>

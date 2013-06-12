@@ -31,8 +31,7 @@
     <feature version="2.10.2">camel-hl7</feature>
 
     <bundle dependency='true'>mvn:com.talend.se.demo/util-spring/1.0-SNAPSHOT</bundle>
-    <bundle dependency='true'>mvn:com.talend.se.demo/util-camel/1.0-SNAPSHOT</bundle>
-    <bundle>mvn:com.talend.se.demo.vista.openmash/hl7mediator/1.0-SNAPSHOT</bundle>
+    <bundle>mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT</bundle>
   </feature>
         
 </features>
