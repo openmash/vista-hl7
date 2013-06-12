@@ -19,7 +19,7 @@
                     http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd
     ">
 
-    <bean id="systemProperties" class="com.talend.se.demo.util.spring.PrintSystemProperties" />
+    <bean id="systemProperties" class="com.talend.se.vista.openmash.util.spring.PrintSystemProperties" />
 
     <util:properties id="defaultProperties">
         <prop key="comment">these properties have been moved to the config-admin service in karaf environment</prop>
@@ -86,7 +86,7 @@
         <property name="properties" ref="propertySources"/>
     </bean>
 
-    <bean id="printProperties" class="com.talend.se.demo.util.spring.PrintProperties">
+    <bean id="printProperties" class="com.talend.se.vista.openmash.util.spring.PrintProperties">
         <property name="propertyList">
             <map>
                 <entry key="container" value="{{container}}"/>

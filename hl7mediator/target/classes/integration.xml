@@ -55,6 +55,19 @@
         <constructor-arg index="0" ref="hl7mediator"/>
     </bean>
 
+    <!-- bean id="senderEndpoint"
+          factory-bean="senderFactory"
+          factory-method="createEndpoint">
+        <constructor-arg index="0" ref="senderConfig"/>
+    </bean>
+
+    <bean id="senderConfig" class="org.apache.camel.component.mina.MinaConfiguration">
+        <property name="protocol" value="tcp"/>
+        <property name="host" value="{{mirth.host}}"/>
+        <property name="port" value="{{mirth.sender.mllp.port}}"/>
+        <property name="sync" value="false"/>
+    </bean -->
+    
     <!-- mina end -->
 
 

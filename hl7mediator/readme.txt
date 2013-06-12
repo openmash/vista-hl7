@@ -28,16 +28,21 @@ commandline and assume maven and jdk are on the path.
 
 Dependencies
 This module depends on the util-spring module.  See the readme for that module
-on how to build and compile it.  (It is basically the same, mvn clean install)
+on how to build and compile it.
 
 Steps
+To build this code, run unit tests, and create an OSGI bundle use the command
+below.  Note that since this is an integration module, the "unit" tests will
+need to connect to a local activemq server as well Mirth.  In addition, if
+building in the same environment with other similar routes on other machines,
+be sure that their consumers on ActiveMQ do not interfere with this routes or
+unit tests may fail (false positive). 
+
+> mvn clean install
+
 To run the code in a local Spring container with Camel during development:
 
 > mvn camel:run
-
-To build this code and create an OSGI bundle:
-
-> mvn clean install
 
 To deploy the resulting bundle to a Nexus repository edit the
 distributionManagement element of the pom to match your repository and then
@@ -46,6 +51,8 @@ the bundle to the actual esb node.  This step is not necessary if all of the
 builds are being done on the same machine as the target runtime.
 
 > mvn deploy
+
+
 
 
 Host Configuration

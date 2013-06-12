@@ -27,10 +27,10 @@
     <feature version="${camel.version}">camel-mina</feature>
 
     <!-- use version 2.1 of hapi rather than 1.2 ued in camel 2.10.2 -->
-    <bundle dependency='true'>mvn:ca.uhn.hapi/hapi-osgi-base/${hapi.version}</bundle>
+    <bundle>mvn:ca.uhn.hapi/hapi-osgi-base/${hapi.version}</bundle>
     <feature version="${camel.version}">camel-hl7</feature>
 
-    <bundle dependency='true'>mvn:com.talend.se.demo/util-spring/${project.version}</bundle>
+    <bundle>mvn:com.talend.se.vista.openmash/util-spring/${project.version}</bundle>
     <bundle>mvn:${project.groupId}/${project.build.finalName}/${project.version}</bundle>
   </feature>
         

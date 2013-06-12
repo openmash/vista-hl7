@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/util
 			http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="systemProperties" class="com.talend.se.demo.util.spring.PrintSystemProperties" />
+    <bean id="systemProperties" class="com.talend.se.vista.openmash.util.spring.PrintSystemProperties" />
 
     <util:properties id="defaultProperties">
         <prop key="activemq.host">amq0.openmashvista.net</prop>
@@ -72,7 +72,7 @@
         <property name="properties" ref="propertySources"/>
     </bean>
 
-    <bean id="printProperties" class="com.talend.se.demo.util.spring.PrintProperties">
+    <bean id="printProperties" class="com.talend.se.vista.openmash.util.spring.PrintProperties">
         <property name="propertyList">
             <map>
                 <entry key="container" value="{{container}}"/>
