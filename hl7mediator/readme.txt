@@ -64,6 +64,11 @@ correctly configured.
 
 Deployment
 
+Before deploying the service, be sure to deploy the default configuration in
+the etc folder of the esb.  The properties in this file control the port and
+host names used by the route.  A sample is found in the src/main/resources/etc
+directory of the git build and it has been configured for the VA environment.
+
 There are two primary mechanisms for deployment: hot deploy and via Karaf's
 maven deployment integration.
 
