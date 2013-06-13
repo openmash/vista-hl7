@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1371081940052
+Bnd-LastModified: 1371118574892
 Build-Jdk: 1.7.0_13
 Built-By: EdwardOst
 Bundle-Description: Profiles shared by all Talend SE demos
@@ -14,5 +14,4 @@ Import-Package: com.talend.se.vista.openmash.util.spring;version="[1.0,2
  apache.camel.component.hl7;version="[2.10,3)",org.apache.camel.componen
  t.jms;version="[2.10,3)",org.apache.camel.component.mina;version="[2.10
  ,3)",org.springframework.beans.factory.config;version="[3.0,4)"
-Originally-Created-By: Apache Maven Bundle Plugin
 Tool: Bnd-1.50.0
