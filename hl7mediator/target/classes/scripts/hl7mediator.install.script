@@ -1,8 +1,0 @@
-features:install camel-mina
-features:install activemq
-features:install activemq-spring
-features:install activemq-camel
-install -s mvn:ca.uhn.hapi/hapi-osgi-base/2.1
-features:install camel-hl7/2.10.2
-install -s mvn:com.talend.se.demo/util-spring/1.0-SNAPSHOT
-install -s mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT
