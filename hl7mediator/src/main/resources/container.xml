@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/util
 			http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="systemProperties" class="com.talend.se.demo.util.spring.PrintSystemProperties" />
+    <bean id="systemProperties" class="com.talend.se.vista.openmash.util.spring.PrintSystemProperties" />
 
     <util:properties id="defaultProperties">
         <prop key="activemq.host">amq0.openmashvista.net</prop>
@@ -20,9 +20,10 @@
         <prop key="activemq.maxConnections">8</prop>
         <prop key="mirth.host">iscache.openmashvista.net</prop>
         <prop key="mirth.receiver.jms.queue">mirth-hl7-out</prop>
-        <prop key="mirth.sender.mllp.port">11961</prop>
+        <prop key="mirth.sender.mllp.port">11964</prop>
         <prop key="mirth.listener.mllp.port">6662</prop>
         <prop key="vista.listener.mllp.port">6663</prop>
+        <prop key="localNetwork">0.0.0.0</prop>
     </util:properties> 
 
     <!-- load just system properties to allow dynamic specification of properties file via local.config System property -->
@@ -71,12 +72,13 @@
         <property name="properties" ref="propertySources"/>
     </bean>
 
-    <bean id="printProperties" class="com.talend.se.demo.util.spring.PrintProperties">
+    <bean id="printProperties" class="com.talend.se.vista.openmash.util.spring.PrintProperties">
         <property name="propertyList">
             <map>
                 <entry key="container" value="{{container}}"/>
                 <entry key="containerConfig" value="{{containerConfig}}"/>
                 <entry key="etcConfigVar" value="{{etcConfigVar}}"/>
+                <entry key="localNetwork" value="{{localNetwork}}"/>
                 <entry key="activemq.host" value="{{activemq.host}}"/>
                 <entry key="activemq.port" value="{{activemq.port}}"/>
                 <entry key="activemq.concurrentConsumers" value="{{activemq.concurrentConsumers}}"/>

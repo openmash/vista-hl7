@@ -30,13 +30,9 @@
     </distributionManagement>
 
     <properties>
-        <!-- local nexus repo -->
+        <!-- default to local nexus repo, see profiles for EC2 and VA settings -->
         <distributionManagement.repository.url>http://localhost:8081/nexus/content/repositories/releases/</distributionManagement.repository.url>
         <distributionManagement.snapshotRepository.url>http://localhost:8081/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url>
-
-        <!-- ec2 nexus repo -->
-        <!-- distributionManagement.repository.url>http://nexus.openmashvista.net:11681/nexus/content/repositories/releases/</distributionManagement.repository.url>
-        <distributionManagement.snapshotRepository.url>http://nexus.openmashvista.net:11681/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url -->
 
         <properties-maven-plugin.version>1.0-alpha-2</properties-maven-plugin.version>
         <maven-jar-plugin.version>2.4</maven-jar-plugin.version>
@@ -673,6 +669,33 @@
                 </dependency>
             </dependencies>
         </profile>    
+
+        <!-- remember that when invoking profiles via the -P option, all 
+        profiles must be specified.  So these profiles are mostly for scripted
+        deployments in which all profiles have been identified in advance. -->
+        <profile>
+            <id>localTarget</id>
+            <properties>
+                <distributionManagement.repository.url>http://localhost:8081/nexus/content/repositories/releases/</distributionManagement.repository.url>
+                <distributionManagement.snapshotRepository.url>http://localhost:8081/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>ec2Target</id>
+            <properties>
+                <distributionManagement.repository.url>http://nexus.openmashvista.net:11681/nexus/content/repositories/releases/</distributionManagement.repository.url>
+                <distributionManagement.snapshotRepository.url>http://nexus.openmashvista.net:11681/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>vaTarget</id>
+            <properties>
+                <distributionManagement.repository.url>http://ga-e8WC6WPM.vacloud.us:8081/nexus/content/repositories/releases/</distributionManagement.repository.url>
+                <distributionManagement.snapshotRepository.url>http://ga-e8WC6WPM.vacloud.us:8081/nexus/content/repositories/snapshots/</distributionManagement.snapshotRepository.url>
+            </properties>
+        </profile>
 
     </profiles>
 

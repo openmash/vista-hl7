@@ -28,27 +28,38 @@ commandline and assume maven and jdk are on the path.
 
 Dependencies
 This module depends on the util-spring module.  See the readme for that module
-on how to build and compile it.  The util-spring module must be deployed to
-the nexus repository in order to deploy this feature to the karaf runtime.  The
-util-spring module does not need to be deployed manually itself.  The transitive
-dependency management of the karaf features file will handle it.  But it needs
-to exist in the nexus repository.
+on how to build and compile it.
 
 Steps
+To build this code, run unit tests, and create an OSGI bundle use the command
+below.  Note that since this is an integration module, the "unit" tests will
+need to connect to a local activemq server as well Mirth.  In addition, if
+building in the same environment with other similar routes on other machines,
+be sure that their consumers on ActiveMQ do not interfere with this routes or
+unit tests may fail (false positive).
+
+Sample mirth channel configurations are included in the test resources.  They
+can be imported into mirth channels.  Mirth (or some other hl7 service) must 
+also be running in order to pass the "unit" tests.  When actually running in the
+VA environment, these mirth channels may need to be different depending on the
+location of servers and ports relative to the production mirth server.  A set
+of mirth channels has been saved in the test/resources/mirth/va directory.
+
+> mvn clean install
+
 To run the code in a local Spring container with Camel during development:
 
 > mvn camel:run
 
-To build this code and create an OSGI bundle:
-
-> mvn clean install
-
 To deploy the resulting bundle to a Nexus repository edit the
 distributionManagement element of the pom to match your repository and then
 issue the maven deploy command.  Note that this is not the same as deploying
-the bundle to the actual esb node.
+the bundle to the actual esb node.  This step is not necessary if all of the
+builds are being done on the same machine as the target runtime.
 
 > mvn deploy
+
+
 
 
 Host Configuration
@@ -59,6 +70,11 @@ fashioned etc/hosts file.  See the parent readme to ensure that these are
 correctly configured.
 
 Deployment
+
+Before deploying the service, be sure to deploy the default configuration in
+the etc folder of the esb.  The properties in this file control the port and
+host names used by the route.  A sample is found in the src/main/resources/etc
+directory of the git build and it has been configured for the VA environment.
 
 There are two primary mechanisms for deployment: hot deploy and via Karaf's
 maven deployment integration.
@@ -81,7 +97,12 @@ generated as part of the build process.  Resolution of transitive dependencies
 on other features and bundles will be managed and installed as necessary by the
 Karaf container.  
 
-karaf> features:addurl mvn:com.talend.se.demo.vista.openmash/hl7mediator/1.0-SNAPSHOT/xml/features
+This hl7mediator module depends on the util-spring module.  The transitive
+dependency management of the karaf features file will handle it.  But the
+util-spring module must have been deployed to the nexus repository in order for
+this feature to be available to the karaf runtime.  
+
+karaf> features:addurl mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT/xml/features
 karaf> features:install hl7mediator
 
 
@@ -97,7 +118,7 @@ karaf> features:install activemq-camel
 karaf> install -s mvn:ca.uhn.hapi/hapi-osgi-base/2.1
 karaf> install -s mvn:org.apache.camel/camel-hl7/2.10.2
 karaf> install -s mvn:com.talend.se.demo/util-spring/1.0-SNAPSHOT
-karaf> install -s mvn:com.talend.se.demo.vista.openmash/hl7mediator/1.0-SNAPSHOT
+karaf> install -s mvn:com.talend.se.vista.openmash/hl7mediator/1.0-SNAPSHOT
 
 A scripted version of these commands are available in hl7mediator.install.script
 which is located in the resource folder.
