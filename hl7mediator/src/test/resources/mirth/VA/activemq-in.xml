@@ -5,10 +5,10 @@
   <enabled>true</enabled>
   <version>2.2.2.6388</version>
   <lastModified>
-    <time>1371120216223</time>
-    <timezone>America/Los_Angeles</timezone>
+    <time>1371078920329</time>
+    <timezone>America/New_York</timezone>
   </lastModified>
-  <revision>2</revision>
+  <revision>5</revision>
   <sourceConnector>
     <name>sourceConnector</name>
     <properties>
@@ -17,7 +17,7 @@
       <property name="clientId"></property>
       <property name="connectionFactoryClass">org.apache.activemq.ActiveMQConnectionFactory</property>
       <property name="connectionFactoryProperties">&lt;properties&gt;
-  &lt;property name=&quot;brokerURL&quot;&gt;tcp://localhost:61616&lt;/property&gt;
+  &lt;property name=&quot;brokerURL&quot;&gt;tcp://10.0.1.242:61616&lt;/property&gt;
 &lt;/properties&gt;</property>
       <property name="durable">0</property>
       <property name="host">mirth-hl7-in</property>
@@ -61,7 +61,7 @@
       <name>Send to ESB via JMS</name>
       <properties>
         <property name="DataType">Channel Writer</property>
-        <property name="host">sink</property>
+        <property name="host">8b0dc5f3-9b5e-41da-909b-0dde5c676af6</property>
         <property name="synchronised">0</property>
         <property name="template">${message.encodedData}</property>
       </properties>
