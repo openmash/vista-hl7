@@ -40,7 +40,10 @@ unit tests may fail (false positive).
 
 Sample mirth channel configurations are included in the test resources.  They
 can be imported into mirth channels.  Mirth (or some other hl7 service) must 
-also be running in order to pass the "unit" tests.
+also be running in order to pass the "unit" tests.  When actually running in the
+VA environment, these mirth channels may need to be different depending on the
+location of servers and ports relative to the production mirth server.  A set
+of mirth channels has been saved in the test/resources/mirth/va directory.
 
 > mvn clean install
 
