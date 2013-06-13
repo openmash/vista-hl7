@@ -20,7 +20,7 @@
         <prop key="activemq.maxConnections">8</prop>
         <prop key="mirth.host">iscache.openmashvista.net</prop>
         <prop key="mirth.receiver.jms.queue">mirth-hl7-out</prop>
-        <prop key="mirth.sender.mllp.port">11961</prop>
+        <prop key="mirth.sender.mllp.port">11964</prop>
         <prop key="mirth.listener.mllp.port">6662</prop>
         <prop key="vista.listener.mllp.port">6663</prop>
         <prop key="localNetwork">0.0.0.0</prop>
