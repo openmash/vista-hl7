@@ -36,7 +36,11 @@ below.  Note that since this is an integration module, the "unit" tests will
 need to connect to a local activemq server as well Mirth.  In addition, if
 building in the same environment with other similar routes on other machines,
 be sure that their consumers on ActiveMQ do not interfere with this routes or
-unit tests may fail (false positive). 
+unit tests may fail (false positive).
+
+Sample mirth channel configurations are included in the test resources.  They
+can be imported into mirth channels.  Mirth (or some other hl7 service) must 
+also be running in order to pass the "unit" tests.
 
 > mvn clean install
 
