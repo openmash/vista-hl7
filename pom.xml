@@ -9,6 +9,7 @@
     <description>VA VistA Scheduling Competition</description>
     <modules>
         <module>openmash-parent</module>
+        <module>util-spring</module>
         <module>hl7mediator</module>
     </modules>
 </project>

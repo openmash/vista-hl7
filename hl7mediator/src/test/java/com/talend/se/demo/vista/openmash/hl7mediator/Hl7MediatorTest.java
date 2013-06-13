@@ -41,7 +41,7 @@ public class Hl7MediatorTest {
     @Autowired @Qualifier("hl7mediator")
     private CamelContext camelContext;
     
-    @EndpointInject(uri  = "mirth.receiver.jms", context = "hl7mediator")
+    @EndpointInject(uri  = "mirthReceiver", context = "hl7mediator")
     private Endpoint mirthReceiverJms;
 
     @EndpointInject(uri = "mock:log:mirthResponseJms", context="hl7mediator")
@@ -62,7 +62,6 @@ public class Hl7MediatorTest {
         testAckMessage(ack);
     }
 
-//    @EndpointInject(uri = "mirth.listener.mllp", context = "hl7mediator")
     @EndpointInject(uri = "mirthListenerEndpoint", context = "hl7mediator")
     private Endpoint mirthListenerMllp;
 
@@ -80,7 +79,6 @@ public class Hl7MediatorTest {
     }
 
 
-//    @EndpointInject(uri  = "vista.listener.mllp", context = "hl7mediator")
     @EndpointInject(uri  = "vistaListenerEndpoint", context = "hl7mediator")
     private Endpoint vistaListenerMllp;
     
