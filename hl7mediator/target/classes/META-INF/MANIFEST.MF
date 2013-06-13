@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1371118574892
+Bnd-LastModified: 1371119322807
 Build-Jdk: 1.7.0_13
 Built-By: EdwardOst
 Bundle-Description: Profiles shared by all Talend SE demos
